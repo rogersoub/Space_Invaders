@@ -2,6 +2,7 @@
     "files.associations": {
         "*.embeddedhtml": "html",
         "allegro.h": "c",
-        "allegro_primitives.h": "c"
+        "allegro_primitives.h": "c",
+        "model.h": "c"
     }
 }

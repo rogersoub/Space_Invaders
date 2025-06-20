@@ -35,6 +35,12 @@ $(BIN_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 	@echo "Compilado $<"
 
+# Space Invaders MVC
+$(BIN_DIR)/spaceinvaders.exe: $(SRC_DIR)/main.c $(SRC_DIR)/model.c $(SRC_DIR)/view.c $(SRC_DIR)/controller.c
+	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS) $(LIBS)
+	@echo "Compilado spaceinvaders!"
+
+
 # Limpeza dos objetos e executáveis
 clean:
 	rm -f $(BIN_DIR)\*.o
