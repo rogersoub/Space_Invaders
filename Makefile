@@ -1,102 +1,47 @@
-ALLEGRO_VERSION=5.2.10
-MINGW_VERSION=6.3.0
-FOLDER=C:
+# Compilador
+CC = gcc
 
-FOLDER_NAME=\allegro-$(ALLEGRO_VERSION)-mingw-$(MINGW_VERSION)
-PATH_ALLEGRO=$(FOLDER)$(FOLDER_NAME)
-LIB_ALLEGRO=\lib\liballegro-$(ALLEGRO_VERSION)-monolith-mt.a
-INCLUDE_ALLEGRO=\include
+# Diretórios
+SRC_DIR = src
+BIN_DIR = bin
+INCLUDE_DIR = include/allegro5
+LIB_DIR = C:/allegro/lib
+DLL_DIR = C:/allegro/bin
 
-all: bola.exe circles.exe passaro_andante.exe teclado.exe bouncer.exe louco.exe frogger.exe pong.exe passaro_raivoso.exe tela.exe allegro_base.exe
+# Bibliotecas Allegro
+LIBS = -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
 
-bola.exe: bola.o
-	gcc -o bola.exe bola.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
+# Flags
+CFLAGS = -I$(INCLUDE_DIR)
+LDFLAGS = -L$(LIB_DIR)
 
-bola.o: bola.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c bola.c		
+# Lista de arquivos (adicione seus arquivos aqui sem extensão)
+EXECUTABLES = base_allegro jogo invaders tela frogger pong teclado passaro_andante passaro_raivoso louco bouncer circles bola
 
-circles.exe: circles.o
-	gcc -o circles.exe circles.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
+# Geração de objetos (.o) automaticamente
+OBJECTS = $(addprefix $(BIN_DIR)/, $(addsuffix .o, $(EXECUTABLES)))
 
-circles.o: circles.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c circles.c		
+# Regra padrão
+all: $(addprefix $(BIN_DIR)/, $(addsuffix .exe, $(EXECUTABLES)))
+	@echo "Build completo!"
 
-passaro_andante.exe: passaro_andante.o
-	gcc -o passaro_andante.exe passaro_andante.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
+# Como compilar cada .exe
+$(BIN_DIR)/%.exe: $(BIN_DIR)/%.o
+	$(CC) $< -o $@ $(LDFLAGS) $(LIBS)
+	@echo "Compilado $@"
 
-passaro_andante.o: passaro_andante.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c passaro_andante.c
-	
-passaro_raivoso.exe: passaro_raivoso.o
-	gcc -o passaro_raivoso.exe passaro_raivoso.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
+# Como gerar os .o a partir dos .c
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -c $< -o $@ $(CFLAGS)
+	@echo "Compilado $<"
 
-passaro_raivoso.o: passaro_raivoso.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c passaro_raivoso.c	
-	
-bouncer.exe: bouncer.o
-	gcc -o bouncer.exe bouncer.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-bouncer.o: bouncer.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c bouncer.c	
-	
-teclado.exe: teclado.o
-	gcc -o teclado.exe teclado.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-teclado.o: teclado.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c teclado.c	
-
-louco.exe: louco.o
-	gcc -o louco.exe louco.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-louco.o: louco.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c louco.c		
-	
-frogger.exe: frogger.o
-	gcc -o frogger.exe frogger.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-frogger.o: frogger.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c frogger.c		
-	
-pong.exe: pong.o
-	gcc -o pong.exe pong.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-pong.o: pong.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c pong.c	
-	
-tela.exe: tela.o
-	gcc -o tela.exe tela.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-tela.o: tela.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c tela.c	
-	
-allegro_base.exe: allegro_base.o
-	gcc -o allegro_base.exe allegro_base.o $(PATH_ALLEGRO)$(LIB_ALLEGRO)
-
-allegro_base.o: allegro_base.c
-	gcc -I $(PATH_ALLEGRO)$(INCLUDE_ALLEGRO) -c allegro_base.c	
-	
-	
+# Limpeza dos objetos e executáveis
 clean:
-	del bola.o 
-	del bola.exe
-	del circles.o 
-	del circles.exe
-	del passaro_andante.o 
-	del passaro_andante.exe
-	del passaro_raivoso.o 
-	del passaro_raivoso.exe	
-	del louco.o 
-	del louco.exe
-	del teclado.o 
-	del teclado.exe
-	del bouncer.o 
-	del bouncer.exe	
-	del frogger.o
-	del frogger.exe
-	del pong.o
-	del pong.exe
-	del tela.o
-	del tela.exe
-	del allegro_base.o
-	del allegro_base.exe
+	rm -f $(BIN_DIR)\*.o
+	rm -f $(BIN_DIR)\*.exe
+	@echo "Limpou os arquivos!"
 
+# Cópia automática das DLLs (opcional)
+copy-dll:
+	copy $(DLL_DIR)\*.dll $(BIN_DIR)\
+	@echo "DLLs copiadas!"

@@ -9,7 +9,26 @@
 2. passar tudo de lib, bin e include para a pasta do seu projeto
 3. coloca como variável de ambiente
 
-# Rodando o Código
-### Exemplo usando arquivo jogo.c
-1. compilar com: gcc main.c -o bin\jogo.exe -IC:\allegro\include -LC:\allegro\lib -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
-2. .\bin\jogo.exe
+# Rodando o Código usando arquivo main.c
+### Exemplo 
+1. compilar com: **gcc main.c -o bin\jogo.exe -IC:\allegro\include -LC:\allegro\lib -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec**
+2. **.\bin\jogo.exe**
+
+# Rodando com makefile
+2. abrir p MSYS2 e digitar:
+    2.1. Somente na primeira vez: **rm -f**
+    2.2. **make**
+    2.3. **./bin/jogo.exe**
+
+# Extenções:
+![Extenção Makefile:](Assets\images\document\exMakefile.png)
+
+# Organização de pastas
+Space-Invaders/
+├── bin/              (onde ficam os executáveis e .dll)
+├── include/          (arquivos .h)
+├── lib/              (bibliotecas .a, caso use local)
+├── src/              (arquivos .c)
+├── assets/           (imagens, sons, fontes, etc.)
+    └── document      (imagens da documentação)
+└── Makefile          (arquivo de build)

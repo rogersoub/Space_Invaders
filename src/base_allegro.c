@@ -36,6 +36,8 @@ int main(int argc, char **argv){
 		fprintf(stderr, "failed to initialize image module!\n");
 		return -1;
 	}
+
+	//----------------------- criacoes dinamicas ---------------------------------------
    
 	//cria um temporizador que incrementa uma unidade a cada 1.0/FPS segundos
     timer = al_create_timer(1.0 / FPS);
@@ -51,6 +53,8 @@ int main(int argc, char **argv){
 		al_destroy_timer(timer);
 		return -1;
 	}
+
+	//----------------------- instalacao de recursos ---------------------------------------
 
 	//instala o teclado
 	if(!al_install_keyboard()) {
