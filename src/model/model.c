@@ -3,11 +3,12 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
+#include <allegro5/allegro_image.h>//local das imagens
 
 //----------------------- colocando calores nas variaveis globais ---------------------------------------
 
-const int SCREEN_W = 960/2;//largura da tela em pixels ->
-const int SCREEN_H = 540/2;//altura da tela ^
+const int SCREEN_W = 1024;//largura da tela em pixels ->
+const int SCREEN_H = 1019;//altura da tela ^
 const int GRASS_H = 60;//altura da grama
 
 const int NAVE_W = 100;//LARGURA DA NAVE
@@ -45,14 +46,51 @@ void update_nave(Nave *nave){
 
 //funcao dos valores do alien
 void initAlien(Alien *alien){
+	/*
+	
+	for (int i = 0; i < 5; i++){
+		for (int j = 0; j < 5; j++){
+
+				alien[i][j] -> x =0;
+				alien[i][j] -> y =0;
+				alien[i][j] -> x_vel =1;
+				alien[i][j] ->y_vel = ALIEN_H;
+				alien[i][j]->cor = al_map_rgb(rand()%256,rand()%256,rand()%256);
+			
+		}
+		
+	}
+	*/
+	//estava *alien e assim:  
+	/**/
 	alien -> x =0;
 	alien -> y =0;
 	alien -> x_vel =1;
 	alien ->y_vel = ALIEN_H;
 	alien->cor = al_map_rgb(rand()%256,rand()%256,rand()%256);
+	
 
 }
 void update_alien(Alien *alien){
+
+	/*
+	for (int i = 0; i < 5; i++){
+		for (int j = 0; j < 5; j++){
+				//se a posicao dele + a lagura dele + a velocidade for maior que a tela
+			if((alien[i][j] ->x + ALIEN_W + alien[][]->x_vel > SCREEN_W) || (alien ->x + alien->x_vel < 0) ){
+				alien->y += alien->y_vel;//a posição vertival aumenta o tamanho dele
+				printf("valor do x_alien: %f ",alien->x_vel);
+				alien ->x_vel *= (-1);//macete para ficar invertando valor de x
+
+			}
+			alien->x += alien->x_vel;//se não nair no if, vai indo para a direita
+			
+		}
+		
+	}
+	*/
+
+	/**/
 	//se a posicao dele + a lagura dele + a velocidade for maior que a tela
 	if((alien ->x + ALIEN_W + alien->x_vel > SCREEN_W) || (alien ->x + alien->x_vel < 0) ){
 		alien->y += alien->y_vel;//a posição vertival aumenta o tamanho dele
@@ -61,6 +99,7 @@ void update_alien(Alien *alien){
 
 	}
 	alien->x += alien->x_vel;//se não nair no if, vai indo para a direita
+	
 }
 
 //funcao de colisao

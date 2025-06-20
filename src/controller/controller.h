@@ -5,6 +5,7 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
+#include <allegro5/allegro_image.h>//local das imagens
 #include "src/model/model.h"//pega somente o model
 
 // ---------------- Funções de Controle ----------------

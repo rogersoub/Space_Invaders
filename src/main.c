@@ -2,6 +2,7 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
+#include <allegro5/allegro_image.h>//local das imagens
 #include "src/model/model.h"//pega o model
 #include "src/controller/controller.h"//pega o controller
 
@@ -13,6 +14,7 @@ int main(){
 	ALLEGRO_DISPLAY *display = NULL;//vai passar o endereço para várias fulções
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;//fila de eventos
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
+	ALLEGRO_BITMAP *fundo = NULL;//var do fundo
 
 	//----------------------- rotina de inicializacao ---------------------------------------
 
@@ -41,6 +43,13 @@ int main(){
 		return -1;
 	}
 
+	//inicia a imagem
+	al_init_image_addon();
+	if(!al_init_image_addon()) {
+		fprintf(stderr, "failed to initialize image!\n");
+		return -1;
+	}
+
 	//----------------------- criacoes dinamicas dos elementos ---------------------------------------
 
     //CRIAR TELA com dimensoes de SCREEN_W, SCREEN_H pixels
@@ -66,6 +75,9 @@ int main(){
 		al_destroy_display(display);
 		return -1;
 	}
+
+  // Carrega a imagem
+  fundo = al_load_bitmap("Assets/images/fundo.bmp");
 
 	//----------------------- fila de eventos ---------------------------------------
 

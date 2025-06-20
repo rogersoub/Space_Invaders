@@ -6,6 +6,7 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
+#include <allegro5/allegro_image.h>//local das imagens
 //----------------------- variaveis globais ---------------------------------------
 
 const int SCREEN_W;//largura da tela em pixels ->
@@ -17,6 +18,8 @@ const int NAVE_H;//ALTURA DA NAVA
 
 const int ALIEN_W;//largura do alien
 const int ALIEN_H;//altura do alien
+
+const int fundo;
 
 const float FPS;
 

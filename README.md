@@ -32,3 +32,6 @@ Space-Invaders/
 ├── assets/           (imagens, sons, fontes, etc.)
     └── document      (imagens da documentação)
 └── Makefile          (arquivo de build)
+
+# Usar Git no MSYS2
+ * instalei o git com o comando:  **pacman -S git** 

@@ -65,6 +65,8 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 
 	//inicia o temporizador
 	al_start_timer(timer);
+	//inicia a imagem
+	al_init_image_addon();
 
 
  	while(playing)//enquanto playng for 1, vai pintar a tela de verde, se capturar um X, vai fazer putra coisa
@@ -93,7 +95,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 			al_flip_display();
 			
 			if(al_get_timer_count(timer)%(int)FPS == 0)
-				printf("\n%d segundos se passaram...", (int)(al_get_timer_count(timer)/FPS));
+				printf("\n%d segundos se passaram EITA...", (int)(al_get_timer_count(timer)/FPS));
 		}
 
         process_event(ev, &nave, &playing);	
