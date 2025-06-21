@@ -95,7 +95,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 			al_flip_display();
 			
 			if(al_get_timer_count(timer)%(int)FPS == 0)
-				printf("\n%d segundos se passaram EITA...", (int)(al_get_timer_count(timer)/FPS));
+				printf("\n%d segundos se passaram EITA VAI APARECER, AMEM...", (int)(al_get_timer_count(timer)/FPS));
 		}
 
         process_event(ev, &nave, &playing);	
