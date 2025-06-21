@@ -1,7 +1,7 @@
 #ifndef VIEW_H//se nao tiver o view, faz oseguinte código: (igual no model)
 #define VIEW_H
 
-#include "src/model/model.h"
+#include "model.h"
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand

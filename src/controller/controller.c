@@ -2,13 +2,13 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
-#include "src/model/model.h"//pega o model
-#include "src/view/view.h"//pega a view
+#include "model.h"//pega o model
+#include "view.h"//pega a view
 
 /*
 process_event => vai pegar o evento, nave e paying apontados. vao ser coloacdos no loop
 */
-process_event(ALLEGRO_EVENT ev, Nave *nave, int *playing){
+void process_event(ALLEGRO_EVENT ev, Nave *nave, int *playing){
 	if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			playing = 0;
 		}

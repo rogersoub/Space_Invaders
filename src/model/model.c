@@ -1,23 +1,9 @@
-#include "src/model/model.h"
+#include "model.h"
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
 #include <allegro5/allegro_image.h>//local das imagens
-
-//----------------------- colocando calores nas variaveis globais ---------------------------------------
-
-const int SCREEN_W = 1024;//largura da tela em pixels ->
-const int SCREEN_H = 1019;//altura da tela ^
-const int GRASS_H = 60;//altura da grama
-
-const int NAVE_W = 100;//LARGURA DA NAVE
-const int NAVE_H = 50;//ALTURA DA NAVA
-
-const int ALIEN_W = 50;//largura do alien
-const int ALIEN_H = 25;//altura do alien
-
-const float FPS = 100;
 
 //----------------------- funcoes de inicialização---------------------------------------
 

@@ -3,8 +3,8 @@
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
 #include <allegro5/allegro_image.h>//local das imagens
-#include "src/model/model.h"//pega o model
-#include "src/controller/controller.h"//pega o controller
+#include "model.h"//pega o model
+#include "controller.h"//pega o controller
 
 int main(){
 
@@ -15,6 +15,7 @@ int main(){
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;//fila de eventos
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
 	ALLEGRO_BITMAP *fundo = NULL;//var do fundo
+
 
 	//----------------------- rotina de inicializacao ---------------------------------------
 
@@ -76,9 +77,9 @@ int main(){
 		return -1;
 	}
 
-  // Carrega a imagem
-  fundo = al_load_bitmap("Assets/images/fundo.bmp");
-
+  	// Carrega a imagem
+  	fundo = al_load_bitmap("Assets/images/fundo.bmp");
+	al_draw_bitmap(fundo, 0, 0, 0);
 	//----------------------- fila de eventos ---------------------------------------
 
     //registra na fila os eventos de tela (ex: clicar no X na janela)

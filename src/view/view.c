@@ -1,4 +1,4 @@
-#include "src/view/view.h"
+#include "view.h"
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
@@ -14,7 +14,6 @@ void draw_scenario(){
         //al_clear_to_color(al_map_rgb(0,0,0));//fica preto
 
           // Desenha a imagem na tela
-        al_draw_bitmap(fundo, 0, 0, 0);
 
         //desenhamdo a grama -> tem a allegro funtions primitives
         al_draw_filled_rectangle(0, SCREEN_H - GRASS_H, SCREEN_W, SCREEN_H, al_map_rgb(0,255,0));//cria um retangulo: topo esquerda,  baixo esquerda, topo direita, baixo direita e a cor
