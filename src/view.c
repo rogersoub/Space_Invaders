@@ -1,4 +1,4 @@
-#include "src/view/view.h"
+#include "view.h"
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand

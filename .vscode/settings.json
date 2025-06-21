@@ -3,6 +3,7 @@
         "*.embeddedhtml": "html",
         "allegro.h": "c",
         "allegro_primitives.h": "c",
-        "model.h": "c"
+        "model.h": "c",
+        "view.h": "c"
     }
 }

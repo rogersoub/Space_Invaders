@@ -1,4 +1,4 @@
-#include "src/model/model.h"
+#include "model.h"
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand

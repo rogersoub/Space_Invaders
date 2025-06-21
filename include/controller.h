@@ -5,7 +5,7 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
-#include "src/model/model.h"//pega somente o model
+#include "model.h"//pega somente o model
 
 // ---------------- Funções de Controle ----------------
 void process_event(ALLEGRO_EVENT ev, Nave *nave, int *playing);

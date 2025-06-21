@@ -8,17 +8,17 @@
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
 //----------------------- variaveis globais ---------------------------------------
 
-const int SCREEN_W;//largura da tela em pixels ->
-const int SCREEN_H;//altura da tela ^
-const int GRASS_H;//altura da grama
+extern const int SCREEN_W;//largura da tela em pixels ->
+extern const int SCREEN_H;//altura da tela ^
+extern const int GRASS_H;//altura da grama
 
-const int NAVE_W;//LARGURA DA NAVE
-const int NAVE_H;//ALTURA DA NAVA
+extern const int NAVE_W;//LARGURA DA NAVE
+extern const int NAVE_H;//ALTURA DA NAVA
 
-const int ALIEN_W;//largura do alien
-const int ALIEN_H;//altura do alien
+extern const int ALIEN_W;//largura do alien
+extern const int ALIEN_H;//altura do alien
 
-const float FPS;
+extern const float FPS;
 
 //----------------------- structs ---------------------------------------
 

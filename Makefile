@@ -11,43 +11,44 @@ DLL_DIR = C:/allegro/bin
 # Bibliotecas Allegro
 LIBS = -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
 
-# Flags
-CFLAGS = -I$(INCLUDE_DIR)
+# Flags de compilação
+CFLAGS = -I$(INCLUDE_DIR) -I$(SRC_DIR)/model -I$(SRC_DIR)/view -I$(SRC_DIR)/controller
 LDFLAGS = -L$(LIB_DIR)
 
-# Lista de arquivos (adicione seus arquivos aqui sem extensão)
-EXECUTABLES = base_allegro jogo invaders tela frogger pong teclado passaro_andante passaro_raivoso louco bouncer circles bola
+# Arquivo principal
+TARGET = spaceinvaders
 
-# Geração de objetos (.o) automaticamente
-OBJECTS = $(addprefix $(BIN_DIR)/, $(addsuffix .o, $(EXECUTABLES)))
+# Fontes
+SRCS = $(SRC_DIR)/main.c \
+       $(SRC_DIR)/model/model.c \
+       $(SRC_DIR)/view/view.c \
+       $(SRC_DIR)/controller/controller.c
+
+# Objetos
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(BIN_DIR)/%.o)
 
 # Regra padrão
-all: $(addprefix $(BIN_DIR)/, $(addsuffix .exe, $(EXECUTABLES)))
+all: $(BIN_DIR)/$(TARGET).exe
 	@echo "Build completo!"
 
-# Como compilar cada .exe
-$(BIN_DIR)/%.exe: $(BIN_DIR)/%.o
-	$(CC) $< -o $@ $(LDFLAGS) $(LIBS)
-	@echo "Compilado $@"
+# Linkagem final
+$(BIN_DIR)/$(TARGET).exe: $(OBJS)
+	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS) $(LIBS)
+	@echo "Compilado $(TARGET)!"
 
-# Como gerar os .o a partir dos .c
+# Compilar objetos
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) -c $< -o $@ $(CFLAGS)
 	@echo "Compilado $<"
 
-# Space Invaders MVC
-$(BIN_DIR)/spaceinvaders.exe: $(SRC_DIR)/main.c $(SRC_DIR)/model.c $(SRC_DIR)/view.c $(SRC_DIR)/controller.c
-	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS) $(LIBS)
-	@echo "Compilado spaceinvaders!"
-
-
-# Limpeza dos objetos e executáveis
+# Limpeza
 clean:
-	rm -f $(BIN_DIR)\*.o
-	rm -f $(BIN_DIR)\*.exe
+	rm -f $(BIN_DIR)/*.o
+	rm -f $(BIN_DIR)/*.exe
 	@echo "Limpou os arquivos!"
 
-# Cópia automática das DLLs (opcional)
+# Cópia das DLLs
 copy-dll:
 	copy $(DLL_DIR)\*.dll $(BIN_DIR)\
 	@echo "DLLs copiadas!"

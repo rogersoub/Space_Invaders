@@ -2,8 +2,8 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
-#include "src/model/model.h"//pega o model
-#include "src/controller/controller.h"//pega o controller
+#include "model.h"//pega o model
+#include "controller.h"//pega o controller
 
 int main(){
 

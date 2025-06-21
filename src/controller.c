@@ -2,8 +2,7 @@
 #include <allegro5/allegro.h>
 #include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
-#include "src/model/model.h"//pega o model
-#include "src/view/view.h"//pega a view
+#include "view.h"//pega a view
 
 /*
 process_event => vai pegar o evento, nave e paying apontados. vao ser coloacdos no loop
@@ -93,7 +92,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 			al_flip_display();
 			
 			if(al_get_timer_count(timer)%(int)FPS == 0)
-				printf("\n%d segundos se passaram...", (int)(al_get_timer_count(timer)/FPS));
+				printf("\n%d segundos se passaram TESTE...", (int)(al_get_timer_count(timer)/FPS));
 		}
 
         process_event(ev, &nave, &playing);	
