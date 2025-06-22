@@ -65,7 +65,7 @@ int main(){
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
-
+	 // Carrega a imagem
 	imagem = al_load_bitmap("sunshine.jpg");
 
 
@@ -77,8 +77,6 @@ int main(){
 		return -1;
 	}
 
-  // Carrega a imagem
-  fundo = al_load_bitmap("Assets/images/fundo.bmp");
 
 	//----------------------- fila de eventos ---------------------------------------
 
