@@ -13,7 +13,7 @@ int main(){
 	ALLEGRO_DISPLAY *display = NULL;//vai passar o endereço para várias fulções
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;//fila de eventos
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
-	//ALLEGRO_BITMAP *imagem = NULL;
+	ALLEGRO_BITMAP *imagem = NULL;
 
 	//----------------------- rotina de inicializacao ---------------------------------------
 
@@ -42,11 +42,11 @@ int main(){
 		return -1;
 	}
 
-	// //instala o mouse
-	// if(!al_install_mouse()) {
-	// 	fprintf(stderr, "failed to initialize mouse!\n");
-	// 	return -1;
-	// }
+	//instala imagem
+	if(!l_init_image_addon()) {
+		fprintf(stderr, "failed to initialize images!\n");
+		return -1;
+	}
 
 	//----------------------- criacoes dinamicas dos elementos ---------------------------------------
 
@@ -65,6 +65,9 @@ int main(){
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
+
+	imagem = al_load_bitmap("sunshine.jpg");
+
 
     //cria a fila de eventos
 	event_queue = al_create_event_queue();//event_queue recebe as informações da fila criada
