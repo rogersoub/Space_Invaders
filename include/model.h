@@ -2,10 +2,8 @@
 #define MODEL_H
 
 
-#include <stdio.h>
+
 #include <allegro5/allegro.h>
-#include <stdlib.h>//origem do rand
-#include <allegro5/allegro_primitives.h>//local que vem as primitivas
 //----------------------- variaveis globais ---------------------------------------
 
 extern const int SCREEN_W;//largura da tela em pixels ->

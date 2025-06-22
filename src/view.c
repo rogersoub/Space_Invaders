@@ -1,7 +1,5 @@
 #include "view.h"
 #include <stdio.h>
-#include <allegro5/allegro.h>
-#include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
 
 //----------------------- funcoes de visualização ---------------------------------------

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
-#include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
+//#include <allegro5/allegro_image.h> //local das imagens
 #include "model.h"//pega o model
 #include "controller.h"//pega o controller
 
@@ -13,6 +13,7 @@ int main(){
 	ALLEGRO_DISPLAY *display = NULL;//vai passar o endereço para várias fulções
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;//fila de eventos
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
+	//ALLEGRO_BITMAP *imagem = NULL;
 
 	//----------------------- rotina de inicializacao ---------------------------------------
 
@@ -40,6 +41,12 @@ int main(){
 		fprintf(stderr, "failed to initialize mouse!\n");
 		return -1;
 	}
+
+	// //instala o mouse
+	// if(!al_install_mouse()) {
+	// 	fprintf(stderr, "failed to initialize mouse!\n");
+	// 	return -1;
+	// }
 
 	//----------------------- criacoes dinamicas dos elementos ---------------------------------------
 
@@ -81,6 +88,11 @@ int main(){
 
      game_loop(display, event_queue, timer);//instanciacao do gameloop. as var ja sao locais de memoria
 
+    //----------------------- rotina de finalizacao do allegro,  liberacao de recursos ---------------------------------------
+
+    al_destroy_display(display);      // destroi a tela
+    al_destroy_timer(timer);          // destroi o temporizador
+    al_destroy_event_queue(event_queue); // destroi a fila de eventos
 
     return 0;
 }
