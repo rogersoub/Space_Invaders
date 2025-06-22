@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
-#include <stdlib.h>//origem do rand
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
-#include <allegro5/allegro_image.h>//local das imagens
-#include "src/model/model.h"//pega o model
-#include "src/controller/controller.h"//pega o controller
+//#include <allegro5/allegro_image.h> //local das imagens
+#include "model.h"//pega o model
+#include "controller.h"//pega o controller
 
 int main(){
 
@@ -14,7 +13,7 @@ int main(){
 	ALLEGRO_DISPLAY *display = NULL;//vai passar o endereço para várias fulções
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;//fila de eventos
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
-	ALLEGRO_BITMAP *fundo = NULL;//var do fundo
+	ALLEGRO_BITMAP *imagem = NULL;
 
 	//----------------------- rotina de inicializacao ---------------------------------------
 
@@ -43,10 +42,9 @@ int main(){
 		return -1;
 	}
 
-	//inicia a imagem
-	al_init_image_addon();
-	if(!al_init_image_addon()) {
-		fprintf(stderr, "failed to initialize image!\n");
+	//instala imagem
+	if(!l_init_image_addon()) {
+		fprintf(stderr, "failed to initialize images!\n");
 		return -1;
 	}
 
@@ -67,6 +65,9 @@ int main(){
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
+
+	imagem = al_load_bitmap("sunshine.jpg");
+
 
     //cria a fila de eventos
 	event_queue = al_create_event_queue();//event_queue recebe as informações da fila criada
@@ -93,6 +94,11 @@ int main(){
 
      game_loop(display, event_queue, timer);//instanciacao do gameloop. as var ja sao locais de memoria
 
+    //----------------------- rotina de finalizacao do allegro,  liberacao de recursos ---------------------------------------
+
+    al_destroy_display(display);      // destroi a tela
+    al_destroy_timer(timer);          // destroi o temporizador
+    al_destroy_event_queue(event_queue); // destroi a fila de eventos
 
     return 0;
 }
