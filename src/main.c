@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
-//#include <allegro5/allegro_image.h> //local das imagens
+#include <allegro5/allegro_image.h> //local das imagens
 #include "model.h"//pega o model
 #include "controller.h"//pega o controller
 
@@ -13,7 +13,6 @@ int main(){
 	ALLEGRO_DISPLAY *display = NULL;//vai passar o endereço para várias fulções
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;//fila de eventos
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
-	ALLEGRO_BITMAP *imagem = NULL;
 
 	//----------------------- rotina de inicializacao ---------------------------------------
 
@@ -30,6 +29,12 @@ int main(){
         return -1;
     }
 
+	//inicializa o addon de imagem para carregar bitmaps
+    if (!al_init_image_addon()) {
+        fprintf(stderr, "Falha ao inicializar o addon de imagem!\n");
+        return -1;
+    }
+
 	//instala o teclado
 	if(!al_install_keyboard()) {
 		fprintf(stderr, "failed to install keyboard!\n");
@@ -42,11 +47,6 @@ int main(){
 		return -1;
 	}
 
-	//instala imagem
-	if(!l_init_image_addon()) {
-		fprintf(stderr, "failed to initialize images!\n");
-		return -1;
-	}
 
 	//----------------------- criacoes dinamicas dos elementos ---------------------------------------
 
@@ -65,8 +65,6 @@ int main(){
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
-	 // Carrega a imagem
-	imagem = al_load_bitmap("sunshine.jpg");
 
 
     //cria a fila de eventos
@@ -74,6 +72,7 @@ int main(){
 	if(!event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
 		al_destroy_display(display);
+		 al_destroy_timer(timer);//liberando o timer
 		return -1;
 	}
 
@@ -87,7 +86,7 @@ int main(){
 	//registra na fila os eventos de mouse (ex: clicar em um botao do mouse)
 	al_register_event_source(event_queue, al_get_mouse_event_source());  
 	//registra na fila os eventos de tempo: quando o tem po altera de t para t+1
-	al_register_event_source(event_queue, al_get_timer_event_source(timer));	
+	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 
 
      game_loop(display, event_queue, timer);//instanciacao do gameloop. as var ja sao locais de memoria

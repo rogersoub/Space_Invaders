@@ -12,8 +12,7 @@ ALLEGRO_LIB_DIR = C:/allegro/lib
 ALLEGRO_DLL_DIR = C:/allegro/bin
 
 # Bibliotecas Allegro
-# Certifique-se de que todas as bibliotecas Allegro que você usa estão listadas aqui.
-# Se você tiver problemas de linkagem, verifique se está usando todas as necessárias.
+# AGORA INCLUIMOS -lallegro_image
 LIBS = -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
 
 # Flags de compilação

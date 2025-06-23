@@ -5,6 +5,8 @@
         "allegro_primitives.h": "c",
         "model.h": "c",
         "view.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "allegro_image.h": "c"
     }
 }
