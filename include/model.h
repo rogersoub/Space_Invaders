@@ -110,7 +110,7 @@ int colisao_alien_solo(Alien alien[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]);
 //funcao para verificar colisao entre a nave e qualquer alien
 bool check_ship_alien_collision(Nave nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]);
 //funcao para verificar colisao entre o tiro e qualquer alien
-bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]);
+bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], int *score_ptr);
 //funcao para verificar o tiro dos aliens na nave
 bool check_alien_shot_nave_collision(AlienShot *alien_shot, Nave nave, int *lives);
 

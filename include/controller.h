@@ -16,6 +16,6 @@ void process_event(ALLEGRO_EVENT ev, Nave *nave, Shot *shot, AlienShot alien_sho
 
 void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_TIMER *timer);
 
-void reset_game(Nave *nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], Shot *shot, AlienShot alien_shots[], int num_alien_shots);
+void reset_game(Nave *nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], Shot *shot, AlienShot alien_shots[], int num_alien_shots, ALLEGRO_TIMER *timer);
 
 #endif

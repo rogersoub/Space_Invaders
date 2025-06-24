@@ -15,7 +15,7 @@ ALLEGRO_DLL_DIR = C:/allegro/bin
 LIBS = -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
 
 # Flags de compilação
-# -I. adiciona o diretório atual (onde está o Makefile) aos caminhos de busca de inclusão
+# -I. adiciona o diretório atual (onde tem o Makefile) aos caminhos de busca de inclusão
 # -I$(SRC_DIR) adiciona o diretório src aos caminhos de busca de inclusão
 # -Iinclude adiciona o diretório include aos caminhos de busca de inclusão
 # -I$(ALLEGRO_INCLUDE_DIR) adiciona o diretório de inclusão do Allegro
@@ -41,13 +41,13 @@ OBJS = $(patsubst $(SRC_DIR)/%.c, $(BIN_DIR)/%.o, $(SRCS))
 
 # Regra padrão: compila e linka tudo
 all: $(BIN_DIR)/$(TARGET).exe
-	@echo "Build completo!"
+	@echo "FUNCIONOUUU!"
 
 # Regra para linkar o executável final
 $(BIN_DIR)/$(TARGET).exe: $(OBJS)
 	@mkdir -p $(BIN_DIR) # Garante que o diretório bin existe
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS) $(LIBS)
-	@echo "Compilado $(TARGET)!"
+	@echo "COMPILADO O EXE $(TARGET)!"
 
 # Regra para compilar cada arquivo .c em um arquivo .o
 # $< é o nome do arquivo .c que está sendo compilado
@@ -55,7 +55,7 @@ $(BIN_DIR)/$(TARGET).exe: $(OBJS)
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@) # Garante que o diretório de saída para o .o existe
 	$(CC) -c $< -o $@ $(CFLAGS)
-	@echo "Compilado $<"
+	@echo "FCOMPILADO A MUDANCA $<"
 
 # Regra de limpeza: remove todos os arquivos .o e .exe
 clean:

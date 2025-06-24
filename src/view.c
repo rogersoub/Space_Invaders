@@ -13,7 +13,7 @@ ALLEGRO_BITMAP *fundo_sprite = NULL;
 ALLEGRO_BITMAP *nave_sprite = NULL;
 ALLEGRO_BITMAP *alien_sprite = NULL;
 ALLEGRO_BITMAP *shot_sprite = NULL; //Sprite do tiro
-ALLEGRO_BITMAP *alien_shot_sprite = NULL; //sprite do tiro do alien
+ALLEGRO_BITMAP *alien_shot_sprite = NULL; //sprite do tiro do alien 
 
 // variaveis globais para sons
 ALLEGRO_SAMPLE *fase_sound = NULL;
@@ -127,7 +127,7 @@ void destroy_alien_shot() {
 
 //funcao para carregar sons
 int load_sounds() {
-    fase_sound = al_load_sample("Assets/audio/fase.wav");
+    fase_sound = al_load_sample("Assets/audio/fase0.wav");
     if (!fase_sound) {
         fprintf(stderr, "falha ao carregar fase.wav\n"); return 0;
     }
@@ -204,9 +204,9 @@ void draw_scenario(){
         }else{
             al_clear_to_color(al_map_rgb(0,0,0));//colore a tela com uma única cor, formato rgb: vermelho,verde,azul (fica preto)
             //desenhamdo a grama -> tem a allegro funtions primitives
-            
+                    al_draw_filled_rectangle(0, SCREEN_H - GRASS_H, SCREEN_W, SCREEN_H, al_map_rgb(0,255,0));//cria um retangulo: topo esquerda,  baixo esquerda, topo direita, baixo direita e a cor 
         }
-        al_draw_filled_rectangle(0, SCREEN_H - GRASS_H, SCREEN_W, SCREEN_H, al_map_rgb(0,255,0));//cria um retangulo: topo esquerda,  baixo esquerda, topo direita, baixo direita e a cor 
+
         
 }
 

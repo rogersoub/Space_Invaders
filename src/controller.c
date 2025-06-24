@@ -12,13 +12,13 @@ int score = 0;
 int lives = 3;
 int high_score = 0;
 int current_alien_animation_frame = 0; //0 ou 1 para animacao
-static int alien_shot_timer = 2; //temporizador para o tiro dos aliens
-static const int ALIEN_SHOT_INTERVAL_MIN = 100; //intervalo minimo para tiro de alien (ticks)
-static const int ALIEN_SHOT_INTERVAL_MAX = 300; //intervalo maximo para tiro de alien (ticks)
+static int alien_shot_timer = 0; //temporizador para o tiro dos aliens
+static const int ALIEN_SHOT_INTERVAL_MIN = 70; //intervalo minimo para tiro de alien (ticks)
+static const int ALIEN_SHOT_INTERVAL_MAX = 200; //intervalo maximo para tiro de alien (ticks)
 
 
 //funcao para resetar o estado do jogo
-void reset_game(Nave *nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], Shot *shot, AlienShot alien_shots[], int num_alien_shots) {
+void reset_game(Nave *nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], Shot *shot, AlienShot alien_shots[], int num_alien_shots, ALLEGRO_TIMER *timer) {
     initNave(nave);
     initAlien(aliens); //corrigido: passando o array aliens corretamente
     initShot(shot);
@@ -28,6 +28,11 @@ void reset_game(Nave *nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], Shot *
     current_alien_animation_frame = 0;
     alien_shot_timer = 0; //reseta o timer do tiro do alien
     high_score = load_high_score(); //carrega o ultimo recorde
+
+    //reseta o temporizador do jogo
+    al_stop_timer(timer);
+    al_set_timer_count(timer, 0);
+    al_start_timer(timer);
 }
 
 
@@ -45,10 +50,6 @@ void process_event(ALLEGRO_EVENT ev, Nave *nave, Shot *shot, AlienShot alien_sho
 
 			//imprime qual tecla foi
 			printf("\ncodigo tecla: %d", ev.keyboard.keycode);
-        	/*
-        	al_clear_to_color(al_map_rgb(rand()%256,rand()%256,rand()%256));
-        	al_flip_display();//atualiza tela, é preciso para gerar a imagem
-     		*/
 			switch (ev.keyboard.keycode){
 				case ALLEGRO_KEY_A:
 					nave->esq = 1;
@@ -75,6 +76,7 @@ void process_event(ALLEGRO_EVENT ev, Nave *nave, Shot *shot, AlienShot alien_sho
             switch (ev.keyboard.keycode) {
                 case ALLEGRO_KEY_ESCAPE: // Permite sair da tela final com ESC
                     *current_game_state = GAME_OVER; //forca GAME_OVER para sair do loop do jogo
+					 ev.type = ALLEGRO_EVENT_DISPLAY_CLOSE;
                 break;
 				case ALLEGRO_KEY_R: //reinicia o jogo
                         *current_game_state = GAME_RUNNING;
@@ -118,7 +120,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 	GameState current_game_state = GAME_RUNNING; //estado inicial do jogo
 
 	high_score = load_high_score(); //carrega o recorde ao iniciar o jogo
-    reset_game(&nave, aliens, &shot, alien_shots, sizeof(alien_shots) / sizeof(AlienShot));
+    reset_game(&nave, aliens, &shot, alien_shots, sizeof(alien_shots) / sizeof(AlienShot), timer);
 
 	initNave(&nave);//inicia nave
 	initAlien(aliens);//inicia alien
@@ -147,7 +149,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
     if (!load_game_font("Assets/font/arial.ttf", 24)) { //recebe arial.ttf
         fprintf(stderr, "Nao foi possível carregar a fonte do jogo. O texto pode nao aparecer.\n");
     }
-	if (!load_score_font("Assets/font/arial.ttf", 18)) {
+	if (!load_score_font("Assets/font/spaceage.ttf", 18)) {
         fprintf(stderr, "Nao foi possível carregar a fonte da pontuacao. O texto pode nao aparecer.\n");
     }
     // carrega os sons
@@ -158,7 +160,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 
 	bool redraw = false;
     int ticks_since_last_alien_sound = 0; //para o som dos passos dos aliens
-    const int ALIEN_SOUND_INTERVAL = 40; //tocar som a cada 40 ticks
+    const int ALIEN_SOUND_INTERVAL = 100; //tocar som a cada 100 ticks (1 segundo)
 
 	//inicia o temporizador
 	al_start_timer(timer);
@@ -173,10 +175,14 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
         //processando os eventos de entrada, como (teclado, mouse, fechar janela)
         process_event(ev, &nave, &shot, alien_shots, sizeof(alien_shots) / sizeof(AlienShot), &current_game_state);
 
-        //saia do loop imediatamente.
-        if (current_game_state != GAME_RUNNING) {
+        
+		//sai do loop imediatamente para fechar tela
+		if (current_game_state != GAME_RUNNING && ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+			printf("\n FECHEI A TELA\n");
             break; 
         }
+		
+
 		//se o jogo ta rodando
 		if (current_game_state == GAME_RUNNING) {
 			//se o tipo de evento for um evento do temporizador, ou seja, se o tempo passou de t para t+1
@@ -204,6 +210,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
             	//som dos passos dos aliens
             	ticks_since_last_alien_sound++;
             	if (ticks_since_last_alien_sound >= ALIEN_SOUND_INTERVAL) {
+
                 	al_play_sample(fase_sound, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL); //som de passo dos aliens
                 	ticks_since_last_alien_sound = 0;
             	}
@@ -211,23 +218,27 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 
             	//verificacoes de colisao e Fim de Jogo
             	if (colisao_alien_solo(aliens)) { //aliens atingem o solo
+
                 	printf("DEBUG: Aliens atingiram o solo. GAME OVER!\n");
                 	current_game_state = GAME_OVER;
+
             	} else if (check_ship_alien_collision(nave, aliens)) { //nave colide com alien
-                	printf("DEBUG: Nave colidiu com alien. GAME OVER!\n");
+
+                	printf("\nNave colidiu com alien. GAME OVER!\n");
                 	current_game_state = GAME_OVER;
-            	} else if (check_shot_alien_collision(&shot, aliens)) { //tiro atinge alien
-            		printf("DEBUG: Tiro atingiu um alien.\n");
+
+            	} else if (check_shot_alien_collision(&shot, aliens,&score)) { //tiro atinge alien
+
+            		printf("\nTiro atingiu um alien.\n");
 					al_play_sample(morto_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL); //som de alien morto
-                	printf("debug: tiro atingiu um alien. pontuacao: %d\n", score);
-                	//a funcao ja desativa o tiro e o alien, entao nao precisamos fazer nada aqui.
-                	//a funcao ja desativa o tiro e o alien, entao nao precisamos fazer nada aqui.
+                	printf("\nTiro atingiu um alien. pontuacao: %d\n", score);
+                	//a funcao ja desativa o tiro e o alien
             	}
 
 				//verifica colisao do tiro do alien com a nave
             	for (int i = 0; i < sizeof(alien_shots) / sizeof(AlienShot); i++) {
                 	if (check_alien_shot_nave_collision(&alien_shots[i], nave, &lives)) {
-                    	printf("debug: tiro do alien atingiu a nave. vidas restantes: %d\n", lives);
+                    	printf("\n Tiro do alien atingiu a nave. vidas restantes: %d\n", lives);
                     	if (lives <= 0) {
                         	current_game_state = GAME_OVER;
                     	}
@@ -237,7 +248,7 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
             
             	// Verifica se todos os aliens foram eliminados (condicao de vitória)
             	if (all_aliens_eliminated(aliens)) {
-                	printf("DEBUG: Todos os aliens foram eliminados. VOCE VENCEU!\n");
+                	printf("Todos os aliens foram eliminados. VOCE VENCEU!\n");
                 	current_game_state = GAME_WON;
             	}
 
@@ -260,9 +271,9 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 
 			draw_nave(nave);//funcao que desenha a nave, tem que ficar depois do cenario
 
-			draw_alien(aliens, current_alien_animation_frame);
+			draw_alien(aliens, current_alien_animation_frame);//desenha aliens com animacao
 
-			draw_shot(shot);
+			draw_shot(shot);//desenha tiro da neve
 
 			for (int i = 0; i < sizeof(alien_shots) / sizeof(AlienShot); i++) { //desenha tiros dos aliens
             	draw_alien_shot(alien_shots[i]);
@@ -278,9 +289,12 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
                 save_high_score(high_score);
             }
             draw_game_over_screen(current_game_state, score, high_score); //passa a pontuacao final e recorde
-            //o loop continuara aqui ate que o usuario pressione esc ou r
+            //o loop continua ate pressionar esc ou r
         }
 
+
+		//AQUIUIIII
+		
 
 	}//FIM DO LAÇO
 
@@ -302,3 +316,33 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
 	//apaga sons
 	destroy_sounds();
 }
+
+
+		/*
+		
+		// Espera por eventos na tela final (ESC para sair, R para reiniciar)
+        // Este loop agora é o único que decide se o jogo continua ou reinicia.
+        ALLEGRO_EVENT ev_final;
+
+        bool waiting_for_exit_or_restart = true;
+
+        while (waiting_for_exit_or_restart) {
+            al_wait_for_event(event_queue, &ev_final);
+
+            if (ev_final.type == ALLEGRO_EVENT_DISPLAY_CLOSE || (ev_final.type == ALLEGRO_EVENT_KEY_DOWN && ev_final.keyboard.keycode == ALLEGRO_KEY_ESCAPE)) {
+                current_game_state = GAME_OVER; // Garante que o loop principal vai parar
+                waiting_for_exit_or_restart = false; // Sai do loop interno
+
+            }else if (ev_final.type == ALLEGRO_EVENT_KEY_DOWN && ev_final.keyboard.keycode == ALLEGRO_KEY_R) {
+
+                reset_game(&nave, aliens, &shot, alien_shots, sizeof(alien_shots) / sizeof(AlienShot), timer); // Passa o timer aqui
+                current_game_state = GAME_RUNNING; // Define o estado para reiniciar o jogo
+                redraw = true; // Força um redesenho imediato no próximo ciclo do loop principal
+                waiting_for_exit_or_restart = false; // Sai do loop interno para continuar o loop principal
+
+            }
+            // Redesenha a tela de game over/win enquanto espera por input para evitar tela "congelada"
+            draw_game_over_screen(current_game_state, score, high_score);
+		}
+
+		*/

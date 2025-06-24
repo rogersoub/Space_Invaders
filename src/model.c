@@ -18,10 +18,10 @@ const int ALIEN_W = 21;//largura do alien
 const int ALIEN_H = 19;//altura do alien
 const int ALIEN_MOVE_INTERVAL = 30;//itervalo para o movimento dos aliens (em ticks do timer)
 const int NUM_ALIEN_ROWS = 6; //numero de linhas de aliens na matriz
-const int NUM_ALIEN_COLS = 12; //numero de colunas de aliens na matriz
+const int NUM_ALIEN_COLS = 6; //numero de colunas de aliens na matriz
 const int ALIEN_MARGIN_LEFT = 30;//margens, valores estao em pixel
 const int ALIEN_MARGIN_RIGHT = 30;
-const int ALIEN_ANIMATION_SPEED = 15; //altera o frame da animacao a cada 15 ticks
+const int ALIEN_ANIMATION_SPEED = 100; //altera o frame da animacao a cada 100 ticks (1 segundo em 100fps)
 
 //globais para controlar o movimento do grupo de aliens
 static float global_alien_x_vel = 1.0; //velocidade horizontal do grupo
@@ -31,7 +31,7 @@ static int alien_animation_timer = 0; //temporizador para controlar a animacao d
 //tiro doa aliens
 const int ALIEN_SHOT_W = 5; //largura do tiro do alien
 const int ALIEN_SHOT_H = 10; //altura do tiro do alien
-const float ALIEN_SHOT_VEL = 3.0; //velocidade do tiro do alien
+const float ALIEN_SHOT_VEL = 1.5; //velocidade do tiro do alien
 
 const int SHOT_W = 5; //largura do tiro
 const int SHOT_H = 15; //altura do tiro
@@ -98,7 +98,7 @@ void initAlien(Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]){
 
         }
     }
-    global_alien_x_vel = 15.0; //reseta a velocidade global dos aliens
+    global_alien_x_vel = 1.0; //reseta a velocidade global dos aliens
 	alien_move_timer = 0; //tem que resetar o temporizador de movimento do alien
     alien_animation_timer = 0; //reseta o temporizador da animacao
 }
@@ -345,7 +345,7 @@ bool check_ship_alien_collision(Nave nave, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIE
 }
 
 //funcao para verificar colisao entre o tiro e qualquer alien
-bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]) {
+bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], int *score_ptr) {
     if (!shot->is_active) {
         return false; //se o tiro nao esta ativo, nao hA colisao
     }
@@ -353,17 +353,17 @@ bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALI
     //bounding box do tiro
     float shot_left = shot->x - (float)SHOT_W /2;
     float shot_right = shot->x + (float)SHOT_W /2;
-    float shot_top = shot->y;
-    float shot_bottom = shot->y + SHOT_H;
+    float shot_top = shot->y - (float)SHOT_H /2;
+    float shot_bottom = shot->y + (float)SHOT_H;
 
     for (int i = 0; i < NUM_ALIEN_ROWS; i++) {
         for (int j = 0; j < NUM_ALIEN_COLS; j++) {
             if (aliens[i][j].is_alive) {
                 //bounding box do alien
-                float alien_left = aliens[i][j].x;
-                float alien_right = aliens[i][j].x + ALIEN_W;
-                float alien_top = aliens[i][j].y;
-                float alien_bottom = aliens[i][j].y + ALIEN_H;
+                float alien_left = aliens[i][j].x - (float)ALIEN_W / 2;
+                float alien_right = aliens[i][j].x + (float)ALIEN_W / 2;
+                float alien_top = aliens[i][j].y - (float)ALIEN_H / 2;
+                float alien_bottom = aliens[i][j].y + (float)ALIEN_H / 2;
 
                 //verifica sobreposicao das bounding boxes
                 if (shot_left < alien_right &&
@@ -372,7 +372,8 @@ bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALI
                     shot_bottom > alien_top) {
                     aliens[i][j].is_alive = false; //alien eliminado
                     shot->is_active = false;//tiro desativado
-                    return true; //colisao detectada
+                    (*score_ptr) += aliens[i][j].score_value;//adiciona valor do alien, se naop der, deixa 10
+                    return true; // Colisão detectada
                 }
             }
         }
@@ -415,7 +416,7 @@ bool check_alien_shot_nave_collision(AlienShot *alien_shot, Nave nave, int *live
 
 //funcao para salvar o recorde em um arquivo
 void save_high_score(int score) {
-    FILE *file = fopen("record.txt", "w");
+    FILE *file = fopen("Assets/document/record.txt", "w");
     if (file) {
         fprintf(file, "%d", score);
         fclose(file);
@@ -426,7 +427,7 @@ void save_high_score(int score) {
 
 //funcao para carregar o recorde de um arquivo
 int load_high_score() {
-    FILE *file = fopen("record.txt", "r");
+    FILE *file = fopen("Assets/document/record.txt", "r");
     int high_score = 0;
     if (file) {
         fscanf(file, "%d", &high_score);
