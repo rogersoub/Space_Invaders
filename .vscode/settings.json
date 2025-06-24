@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "files.associations": {
         "*.embeddedhtml": "html",
@@ -8,4 +9,23 @@
         "allegro_image.h": "c",
         "view.h": "c"
     }
+=======
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "allegro.h": "c",
+        "allegro_primitives.h": "c",
+        "model.h": "c",
+        "view.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "allegro_image.h": "c",
+        "bitmap.h": "c",
+        "bitmap_lock.h": "c",
+        "bitmap_io.h": "c",
+        "bitmap_draw.h": "c",
+        "allegro_font.h": "c",
+        "stdbool.h": "c"
+    }
+>>>>>>> invaders_MVC
 }
