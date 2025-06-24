@@ -2,6 +2,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
 #include <allegro5/allegro_image.h> //local das imagens
+#include <allegro5/allegro_font.h> //para usar al_init_font_addon
+#include <allegro5/allegro_ttf.h>//para usar al_init_ttf_addon
 #include "model.h"//pega o model
 #include "controller.h"//pega o controller
 
@@ -23,7 +25,7 @@ int main(){
 		return -1;
 	}
 
-    //inicializa o modulo de primitivas do Allegro
+    //inicializa o modulo de primitivas do allegro
     if(!al_init_primitives_addon()){
 		fprintf(stderr, "failed to initialize primitives!\n");
         return -1;
@@ -32,6 +34,18 @@ int main(){
 	//inicializa o addon de imagem para carregar bitmaps
     if (!al_init_image_addon()) {
         fprintf(stderr, "Falha ao inicializar o addon de imagem!\n");
+        return -1;
+    }
+
+	//inicializa o addon de fonte do allegro
+    if (!al_init_font_addon()) {
+        fprintf(stderr, "Falha ao inicializar o addon de fonte!\n");
+        return -1;
+    }
+
+    //inicializa o addon TrueType Font (TTF) do dllegro
+    if (!al_init_ttf_addon()) {
+        fprintf(stderr, "Falha ao inicializar o addon TTF!\n");
         return -1;
     }
 

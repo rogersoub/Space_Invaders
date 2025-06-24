@@ -5,7 +5,7 @@
 #include "model.h"//pega somente o model
 
 // ---------------- Funções de Controle ----------------
-void process_event(ALLEGRO_EVENT ev, Nave *nave, int *playing);
+void process_event(ALLEGRO_EVENT ev, Nave *nave, Shot *shot, GameState *current_game_state);
 void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_TIMER *timer);
 
 #endif

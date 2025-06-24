@@ -12,7 +12,6 @@ ALLEGRO_LIB_DIR = C:/allegro/lib
 ALLEGRO_DLL_DIR = C:/allegro/bin
 
 # Bibliotecas Allegro
-# AGORA INCLUIMOS -lallegro_image
 LIBS = -lallegro -lallegro_main -lallegro_primitives -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
 
 # Flags de compilação
@@ -66,7 +65,7 @@ clean:
 
 # Regra para copiar as DLLs do Allegro para o diretório bin/
 copy-dll:
-	# Use 'copy' para Windows CMD/MinGW ou 'cp' para Linux/WSL
-	# Certifique-se de que o caminho das DLLs esteja correto para sua instalação do Allegro
+# Use 'copy' para Windows CMD/MinGW ou 'cp' para Linux/WSL
+# Certifique-se de que o caminho das DLLs esteja correto para sua instalação do Allegro
 	copy $(ALLEGRO_DLL_DIR)\*.dll $(BIN_DIR)\
 	@echo "DLLs copiadas!"

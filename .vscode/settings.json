@@ -7,6 +7,10 @@
         "view.h": "c",
         "stdio.h": "c",
         "stdlib.h": "c",
-        "allegro_image.h": "c"
+        "allegro_image.h": "c",
+        "bitmap.h": "c",
+        "bitmap_lock.h": "c",
+        "bitmap_io.h": "c",
+        "bitmap_draw.h": "c"
     }
 }
