@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <time.h> //para srand e time
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>//local que vem as primitivas
 #include <allegro5/allegro_image.h> //local das imagens
 #include <allegro5/allegro_font.h> //para usar al_init_font_addon
 #include <allegro5/allegro_ttf.h>//para usar al_init_ttf_addon
+#include <allegro5/allegro_audio.h> //para audio
+#include <allegro5/allegro_acodec.h>//para audio codecs
 #include "model.h"//pega o model
 #include "controller.h"//pega o controller
 
@@ -17,6 +20,8 @@ int main(){
     ALLEGRO_TIMER *timer = NULL;//estrutura de tempo
 
 	//----------------------- rotina de inicializacao ---------------------------------------
+
+    srand(time(NULL)); //inicializa o gerador de numeros aleatorios para uso geral
 
     //inicializa o Allegro
 	if(!al_init())// reporta erro
@@ -60,6 +65,25 @@ int main(){
 		fprintf(stderr, "failed to initialize mouse!\n");
 		return -1;
 	}
+
+    //inicializa o addon de audio
+    if (!al_install_audio()) {
+        fprintf(stderr, "falha ao inicializar o audio!\n");
+        return -1;
+    }
+
+    //inicializa o addon de codecs de audio
+    if (!al_init_acodec_addon()) {
+        fprintf(stderr, "falha ao inicializar os codecs de audio!\n");
+        return -1;
+    }
+
+    //reserva um numero de samples para tocar ao mesmo tempo
+    //pode mudar esse valor conforme a necessidade do jogo para sons simultaneos
+    if (!al_reserve_samples(10)) {
+        fprintf(stderr, "falha ao reservar samples de audio!\n");
+        return -1;
+    }
 
 
 	//----------------------- criacoes dinamicas dos elementos ---------------------------------------

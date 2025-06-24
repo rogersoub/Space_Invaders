@@ -11,6 +11,8 @@
         "bitmap.h": "c",
         "bitmap_lock.h": "c",
         "bitmap_io.h": "c",
-        "bitmap_draw.h": "c"
+        "bitmap_draw.h": "c",
+        "allegro_font.h": "c",
+        "stdbool.h": "c"
     }
 }
