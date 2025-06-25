@@ -362,6 +362,8 @@ void draw_game_over_screen(GameState game_state, int final_score, int high_score
             text_color = al_map_rgb(0, 255, 0); //verde para vitoria
         }
 
+        
+
         //sesenha a mensagem principal
         al_draw_text(game_font, text_color, SCREEN_W / 2, SCREEN_H / 2 - 50,
                      ALLEGRO_ALIGN_CENTER, message);

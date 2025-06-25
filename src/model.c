@@ -18,7 +18,7 @@ const int ALIEN_W = 21;//largura do alien
 const int ALIEN_H = 19;//altura do alien
 const int ALIEN_MOVE_INTERVAL = 30;//itervalo para o movimento dos aliens (em ticks do timer)
 const int NUM_ALIEN_ROWS = 6; //numero de linhas de aliens na matriz
-const int NUM_ALIEN_COLS = 6; //numero de colunas de aliens na matriz
+const int NUM_ALIEN_COLS = 12; //numero de colunas de aliens na matriz
 const int ALIEN_MARGIN_LEFT = 30;//margens, valores estao em pixel
 const int ALIEN_MARGIN_RIGHT = 30;
 const int ALIEN_ANIMATION_SPEED = 100; //altera o frame da animacao a cada 100 ticks (1 segundo em 100fps)
@@ -81,7 +81,7 @@ void initAlien(Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]){
             aliens[i][j].x = start_x + j * spacing_x;
             aliens[i][j].y = start_y + i * spacing_y;
             aliens[i][j].cor = al_map_rgb(rand() % 256, rand() % 256, rand() % 256); //cor reserva
-            aliens[i][j].type = rand() % 2; //aleattoriedade futura, 0 ou 1 para diferentes tipos de alien (se sua spritesheet tiver)
+            aliens[i][j].type = rand() % 2; //aleattoriedade futura, 0 ou 1 para diferentes tipos de alien
             aliens[i][j].is_alive = true; //todos os aliens tem que comecar vivos
 
             //atribui tipo e pontuacao baseados na linha
@@ -98,7 +98,7 @@ void initAlien(Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS]){
 
         }
     }
-    global_alien_x_vel = 1.0; //reseta a velocidade global dos aliens
+    global_alien_x_vel = 2.0; //reseta a velocidade global dos aliens
 	alien_move_timer = 0; //tem que resetar o temporizador de movimento do alien
     alien_animation_timer = 0; //reseta o temporizador da animacao
 }
