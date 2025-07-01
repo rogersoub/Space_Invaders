@@ -147,6 +147,10 @@ void game_loop(ALLEGRO_DISPLAY *display, ALLEGRO_EVENT_QUEUE *event_queue, ALLEG
     if (!load_shot("Assets/images/navep.bmp")) { //recebe a imagemda nave pequena
         fprintf(stderr, "Nao foi possível carregar o sprite do tiro. O jogo continuara sem ele.\n");
     }
+	//carrega o sprite do tiro do ALIEN
+    if (!load_alien_shot("Assets/images/navep.bmp")) { //recebe a imagemda nave pequena
+        fprintf(stderr, "Nao foi possível carregar o sprite do tiro da nave. O jogo continuara sem ele.\n");
+    }
     //Carrega a fonte
     if (!load_game_font("Assets/font/arial.ttf", 24)) { //recebe arial.ttf
         fprintf(stderr, "Nao foi possível carregar a fonte do jogo. O texto pode nao aparecer.\n");

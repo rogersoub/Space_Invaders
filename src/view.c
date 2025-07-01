@@ -247,9 +247,9 @@ void draw_alien(Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], int current_animat
     //coordenadas de recorte na folha de sprites para os diferentes tipos de alien
     //baseadas na imagem image_4ee8fb.png
     float alien_sprite_coords[3][2][2] = { // [type][frame][x,y]
-        {{48, 33}, {83, 32}},   // type 0 (top row)
-        {{48, 58}, {83, 58}}, // type 1 (middle row)
-        {{48, 86}, {84, 86}}  // type 2 (bottom row)
+        {{48, 33}, {81, 32}},   // type 0 (duas do topo)
+        {{48, 58}, {82, 58}}, // type 1 (duas do meio)
+        {{48, 86}, {82, 86}}  // type 2 (ultimas 2)
     };
 
     float sw_alien = ALIEN_W; //largura do sprite individual
@@ -282,21 +282,18 @@ void draw_shot(Shot shot) {
         if (shot_sprite) {
             //desenha o sprite do tiro (se houver um)
 
-            float sx_shot = 8; //posicao x de inicio do recorte
-            float sy_shot = 10; //posicao y de inicio do recorte
+            float sx_shot = 7; //posicao x de inicio do recorte
+            float sy_shot = 9; //posicao y de inicio do recorte
             float sw_shot = SHOT_W; //latgura do sprite do tiro
             float sh_shot = SHOT_H; //altura do sprite do tiro
 
             // centraliza o tiro no x da sua posicao
-            al_draw_bitmap_region(shot_sprite, sx_shot, sy_shot, sw_shot, sh_shot,
-                                  shot.x - (float)SHOT_W / 2, shot.y, 0);
+            al_draw_bitmap_region(shot_sprite, sx_shot, sy_shot, sw_shot, sh_shot, shot.x - (float)SHOT_W / 2, shot.y, 0);
             
                             
         }else{
             //se o sprite nao carregou, coloca um retangulo para o tiro
-            al_draw_filled_rectangle(shot.x - (float)SHOT_W / 2, shot.y,
-                                     shot.x + (float)SHOT_W / 2, shot.y + SHOT_H,
-                                     shot.cor);
+            al_draw_filled_rectangle(shot.x - (float)SHOT_W / 2, shot.y, shot.x + (float)SHOT_W / 2, shot.y + SHOT_H, shot.cor);
         }
     }
 }
@@ -308,13 +305,12 @@ void draw_alien_shot(AlienShot alien_shot) {
         if (alien_shot_sprite) {
             // assume que o tiro do alien esta em uma regiao especifica da alienp.bmp ou outra imagem
             // exemplo: um pequeno retangulo 5x10 px (ALIEN_SHOT_W x ALIEN_SHOT_H)
-            float sx_alien_shot = 4; //posicao x de inicio do recorte (ajuste conforme sua spritesheet)
-            float sy_alien_shot = 4; //posicao y de inicio do recorte (ajuste conforme sua spritesheet)
+            float sx_alien_shot = 8; //posicao x de inicio do recorte (ajuste conforme sua spritesheet)
+            float sy_alien_shot = 32; //posicao y de inicio do recorte (ajuste conforme sua spritesheet)
             float sw_alien_shot = ALIEN_SHOT_W; //largura do sprite do tiro do alien
             float sh_alien_shot = ALIEN_SHOT_H; //altura do sprite do tiro do alien
 
-            al_draw_bitmap_region(alien_shot_sprite, sx_alien_shot, sy_alien_shot, sw_alien_shot, sh_alien_shot,
-                                  alien_shot.x - (float)ALIEN_SHOT_W / 2, alien_shot.y, 0);
+            al_draw_bitmap_region(alien_shot_sprite, sx_alien_shot, sy_alien_shot, sw_alien_shot, sh_alien_shot, alien_shot.x - (float)ALIEN_SHOT_W / 2, alien_shot.y, 0);
         } else {
             // fallback se o sprite nao carregou: desenha um retangulo para o tiro do alien
             al_draw_filled_rectangle(alien_shot.x - (float)ALIEN_SHOT_W / 2, alien_shot.y,

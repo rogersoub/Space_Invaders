@@ -32,7 +32,7 @@ extern const int SHOT_H;
 
 extern const float FPS;
 
-//----------------------- enums, estados do Jogo ---------------------------------------
+//----------------------- enum, estados do Jogo ---------------------------------------
 typedef enum GameState {
     GAME_RUNNING,
     GAME_OVER,

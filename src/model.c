@@ -15,7 +15,7 @@ const int NAVE_W = 39;//LARGURA DA NAVE
 const int NAVE_H = 28;//ALTURA DA NAVA
 
 const int ALIEN_W = 21;//largura do alien
-const int ALIEN_H = 19;//altura do alien
+const int ALIEN_H = 16;//altura do alien
 const int ALIEN_MOVE_INTERVAL = 30;//itervalo para o movimento dos aliens (em ticks do timer)
 const int NUM_ALIEN_ROWS = 6; //numero de linhas de aliens na matriz
 const int NUM_ALIEN_COLS = 12; //numero de colunas de aliens na matriz
@@ -30,11 +30,11 @@ static int alien_move_timer = 0; //temporizador para controlar o movimento passo
 static int alien_animation_timer = 0; //temporizador para controlar a animacao dos aliens
 //tiro doa aliens
 const int ALIEN_SHOT_W = 5; //largura do tiro do alien
-const int ALIEN_SHOT_H = 10; //altura do tiro do alien
+const int ALIEN_SHOT_H = 7; //altura do tiro do alien
 const float ALIEN_SHOT_VEL = 1.5; //velocidade do tiro do alien
 
 const int SHOT_W = 5; //largura do tiro
-const int SHOT_H = 15; //altura do tiro
+const int SHOT_H = 7; //altura do tiro, era 15
 
 
 const float FPS = 100;
@@ -264,8 +264,8 @@ void fireAlienShot(Alien aliens[NUM_ALIEN_ROWS][NUM_ALIEN_COLS], AlienShot alien
         return;
     }
 
-    //encontra a coluna mais baixa com um alien vivo para atirar
-    int lowest_alien_per_col[NUM_ALIEN_COLS];
+    //tentar encontrar a coluna mais baixa com um alien vivo para atirar
+    int lowest_alien_per_col[NUM_ALIEN_COLS];//sei que tem essas colunas, vai ficar em baixo
     for (int j = 0; j < NUM_ALIEN_COLS; j++) {
         lowest_alien_per_col[j] = -1; //nenhum alien vivo na coluna
         for (int i = NUM_ALIEN_ROWS - 1; i >= 0; i--) { //comeca de baixo para cima
@@ -353,23 +353,21 @@ bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALI
     //bounding box do tiro
     float shot_left = shot->x - (float)SHOT_W /2;
     float shot_right = shot->x + (float)SHOT_W /2;
-    float shot_top = shot->y - (float)SHOT_H /2;
+    float shot_top = shot->y;//- (float)SHOT_H /2
     float shot_bottom = shot->y + (float)SHOT_H;
-
+    
+    //tenho que iniciar um for porque via verificar todos
     for (int i = 0; i < NUM_ALIEN_ROWS; i++) {
         for (int j = 0; j < NUM_ALIEN_COLS; j++) {
             if (aliens[i][j].is_alive) {
                 //bounding box do alien
-                float alien_left = aliens[i][j].x - (float)ALIEN_W / 2;
-                float alien_right = aliens[i][j].x + (float)ALIEN_W / 2;
-                float alien_top = aliens[i][j].y - (float)ALIEN_H / 2;
-                float alien_bottom = aliens[i][j].y + (float)ALIEN_H / 2;
+                float alien_left = aliens[i][j].x;
+                float alien_right = aliens[i][j].x + (float)ALIEN_W;
+                float alien_top = aliens[i][j].y;
+                float alien_bottom = aliens[i][j].y + (float)ALIEN_H;
 
                 //verifica sobreposicao das bounding boxes
-                if (shot_left < alien_right &&
-                    shot_right > alien_left &&
-                    shot_top < alien_bottom &&
-                    shot_bottom > alien_top) {
+                if (shot_left < alien_right && shot_right > alien_left && shot_top < alien_bottom && shot_bottom > alien_top) {
                     aliens[i][j].is_alive = false; //alien eliminado
                     shot->is_active = false;//tiro desativado
                     (*score_ptr) += aliens[i][j].score_value;//adiciona valor do alien, se naop der, deixa 10
@@ -385,7 +383,7 @@ bool check_shot_alien_collision(Shot *shot, Alien aliens[NUM_ALIEN_ROWS][NUM_ALI
 //funcao para verificar colisao entre o tiro do alien e a nave
 bool check_alien_shot_nave_collision(AlienShot *alien_shot, Nave nave, int *lives) {
     if (!alien_shot->is_active) {
-        return false; //se o tiro nao esta ativo, nao ha colisao
+        return false; //se o tiro nao esta ativo, nao tem colisao
     }
 
     //bounding box do tiro do alien
@@ -401,10 +399,7 @@ bool check_alien_shot_nave_collision(AlienShot *alien_shot, Nave nave, int *live
     float nave_bottom = SCREEN_H - GRASS_H;
 
     //verifica sobreposicao das bounding boxes
-    if (alien_shot_left < nave_right &&
-        alien_shot_right > nave_left &&
-        alien_shot_top < nave_bottom &&
-        alien_shot_bottom > nave_top) {
+    if (alien_shot_left < nave_right && alien_shot_right > nave_left && alien_shot_top < nave_bottom && alien_shot_bottom > nave_top) {
         alien_shot->is_active = false; //tiro do alien desativado
         (*lives)--; //diminui uma vida
         return true; //colisao detectada

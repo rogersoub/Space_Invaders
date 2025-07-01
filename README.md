@@ -1,4 +1,5 @@
 Este é um tutorial de configuração para rodar o jogo Space Invaders presente neste repositório.
+* Para mais detalhes de documentação, acesse: [https://docs.google.com/document/d/18AipTrMk75dzlWV2tXrqifVCf_wZC9PVuDAR6qJaluo/edit?usp=sharing](https://docs.google.com/document/d/18AipTrMk75dzlWV2tXrqifVCf_wZC9PVuDAR6qJaluo/edit?usp=sharing)
 
 # Organização de pastas
 ~~~html
@@ -12,7 +13,7 @@ Space-Invaders/
     ├── audio/          (sons)
     ├── document/       (documentação e record)
     ├── font/           (fontes)
-    ├── images/         (imagens)
+    └── images/         (imagens)
         └── document    (imagens da documentação)
 └── Makefile            (arquivo de build)
 ~~~
@@ -42,7 +43,7 @@ Space-Invaders/
 
 ## Configurando Visual Studio Code
 
-1. Clone o repositório com **https://github.com/rogersoub/Space_Invaders.git**
+1. Clone o repositório com **git clone https://github.com/rogersoubr/Space_Invaders.git**
 2. Entre no diretório que colocou o arquivo.
 
 ### Extenções:
@@ -98,3 +99,8 @@ Space-Invaders/
 
 ### Minha Playlis:
 [https://www.youtube.com/watch?v=qF0W5mdhKhA&list=PL1QT-z6e-iYTxq5_Y2-TTkZsBYU9iNdwO](https://www.youtube.com/watch?v=qF0W5mdhKhA&list=PL1QT-z6e-iYTxq5_Y2-TTkZsBYU9iNdwO)
+
+### Repositórios referência
+* [https://github.com/narukaioh/Space-Invaders](https://github.com/narukaioh/Space-Invaders)
+
+* [https://github.com/ld-wg/space-invaders.c](https://github.com/ld-wg/space-invaders.c)
